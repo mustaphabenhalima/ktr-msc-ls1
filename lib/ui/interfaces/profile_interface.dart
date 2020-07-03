@@ -9,7 +9,6 @@ import 'package:ktr_msc_ls1/ui/shared/validators.dart';
 import 'package:ktr_msc_ls1/ui/widgets/input_field.dart';
 import 'package:ktr_msc_ls1/ui/widgets/rounded_btn.dart';
 import 'package:provider/provider.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
 class ProfileInterface extends StatefulWidget {
   @override
@@ -139,8 +138,7 @@ class ProfileInterfaceState extends State<ProfileInterface> {
                               textInputAction: TextInputAction.next,
                               currentFocusNode: _phoneFocus,
                               nextFocusNode: _passwordFocus,
-                              validator: (value) =>
-                                  Validators.validateEmail(value),
+                              validator: (value) => Validators.required(value),
                               suffixIcon: Icon(
                                 Icons.phone_android,
                                 color: Colors.white,
@@ -164,12 +162,15 @@ class ProfileInterfaceState extends State<ProfileInterface> {
                                 text: "Signup",
                                 onPressed: () async {
                                   if (_formKey.currentState.validate()) {
-                                    bool result = await model.signUp();
+                                    bool result = await model.signUp(
+                                      _nameController.text,
+                                      _companyController.text,
+                                      _emailController.text,
+                                      _phoneController.text,
+                                    );
                                     if (result) {
-                                      Navigator.pushNamed(
-                                        context,
-                                        RoutePaths.Library,
-                                      );
+                                      Navigator.pushNamedAndRemoveUntil(context,
+                                          RoutePaths.Library, (route) => false);
                                     }
                                   }
                                 }),

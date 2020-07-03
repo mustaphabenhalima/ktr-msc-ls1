@@ -13,12 +13,13 @@ class ProfileViewModel extends ChangeNotifier {
       : _authenticationService = authenticationService,
         _localStorageService = localStorageService;
 
-  Future<bool> signUp() async {
+  Future<bool> signUp(
+      String name, String companyName, String email, String phone) async {
     try {
-      bool success = await _authenticationService.signUp();
+      bool success =
+          await _authenticationService.signUp(name, companyName, email, phone);
 
       if (success) {
-      } else {
         await _localStorageService.setUser(User());
         return true;
       }

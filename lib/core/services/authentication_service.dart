@@ -1,4 +1,6 @@
 
+import 'package:ktr_msc_ls1/core/models/user.dart';
+
 import 'localstorage_service.dart';
 
 class AuthenticationService {
@@ -10,7 +12,13 @@ class AuthenticationService {
     return true;
   }
 
-  Future<bool> signUp() async {
+  Future<bool> signUp(String name,String companyName,String email,String phone) async {
+    await _localStorageService.setUser(User(
+      name:name,
+      companyName: companyName,
+      email: email,
+      phone: phone
+    ));
     return true;
   }
 
